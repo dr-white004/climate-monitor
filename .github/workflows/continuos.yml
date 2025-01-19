@@ -1,4 +1,4 @@
-name: CI/CD with Docker and Render Deployment
+name: Build and Push to Docker Hub
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push to Docker Hub
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -22,17 +22,18 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build the Docker image
-      - name: Build Docker image
+      # Build and push the Docker image
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
         with:
           context: .
           file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/flask-weather-app:latest
-          build-args: # Pass secrets as build arguments
+          build-args: # Ensure correct indentation for build-args
             FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
             API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+
 
   # deploy-to-render:
   #   name: Deploy to Render
