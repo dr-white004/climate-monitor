@@ -6,24 +6,23 @@ from datetime import datetime
 from geopy.geocoders import Nominatim
 from dotenv import load_dotenv
 
-# Initialize Flask app
+
 app = Flask(__name__)
 
-# Set secret keys from environment variables
+
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 API_KEY = os.getenv("API_SECRET_KEY")
 
 # Set start time for uptime calculation
 app.start_time = datetime.now()
 
-# Initialize geolocation library
+# geolocation library
 geofinder = Nominatim(user_agent="app")
 current_city = ""
 location = ""
 longitude = ""
 latitude = ""
 
-# Load environment variables
 load_dotenv()
 
 # Set up log folder and log file
@@ -38,8 +37,8 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(log_file),  # Logs will be written to app.log
-        logging.StreamHandler()         # Also log to console
+        logging.FileHandler(log_file),  
+        logging.StreamHandler()         
     ]
 )
 
@@ -48,7 +47,7 @@ def health_check():
     return jsonify({
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
-        'uptime': str(datetime.now() - app.start_time)  # Uptime since app start
+        'uptime': str(datetime.now() - app.start_time) 
     }), 200
 
 @app.route('/logs')
@@ -58,7 +57,7 @@ def view_logs():
             logs = f.read()
 
         # Serve logs as plain text
-        return f"<pre>{logs}</pre>"  # Use <pre> tag to format the logs in a readable way
+        return f"<pre>{logs}</pre>"  
     except Exception as e:
         return jsonify({
             'status': 'error',

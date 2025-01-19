@@ -10,7 +10,7 @@ services:
       - API_SECRET_KEY=${API_SECRET_KEY}
     restart: unless-stopped
     volumes:
-      - ./logs:/app/logs  # Persist logs directory
+      - ./logs:/app/logs  # logs directory
     logging:
       driver: "json-file"
       options:

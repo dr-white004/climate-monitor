@@ -1,20 +1,20 @@
-# Use Python slim image as base image
+# Python slim image as base image
 FROM python:3.9-slim
 
-# Declare build arguments
+# build arguments declared
 ARG FLASK_SECRET_KEY
 ARG API_SECRET_KEY
 
-# Set working directory
+# working directory
 WORKDIR /app
 
-# Set environment variables using the build args
+#  environment variables 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     FLASK_SECRET_KEY=$FLASK_SECRET_KEY \
     API_SECRET_KEY=$API_SECRET_KEY
 
-# Install system dependencies (e.g., curl if needed)
+# Install system dependencies 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc curl && \
     rm -rf /var/lib/apt/lists/*
@@ -23,13 +23,13 @@ RUN apt-get update && \
 COPY requirements.txt ./ 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
 # Create a log directory to store application logs
 RUN mkdir -p /app/logs
 
-# Expose the port the app will run on
+# Expose port
 EXPOSE 8000
 
 # Set health check
