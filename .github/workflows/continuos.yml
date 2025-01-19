@@ -30,9 +30,10 @@ jobs:
           file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/flask-weather-app:latest
-          build-args: 
-            FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
-            API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+          build-args: |
+            FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }}
+            API_SECRET_KEY=${{ secrets.API_SECRET_KEY }}
+
   
 
 
