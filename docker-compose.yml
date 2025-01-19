@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - API_SECRET_KEY=${API_SECRET_KEY}
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs  # Persist logs directory
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
