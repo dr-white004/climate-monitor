@@ -1,4 +1,4 @@
-name: Build and Push to Docker Hub
+name: CI/CD with Docker
 
 on:
   push:
@@ -30,9 +30,10 @@ jobs:
           file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/flask-weather-app:latest
-          build-args: # Ensure correct indentation for build-args
+          build-args: 
             FLASK_SECRET_KEY: ${{ secrets.FLASK_SECRET_KEY }}
             API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+  
 
 
   # deploy-to-render:

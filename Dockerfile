@@ -1,14 +1,18 @@
 # Use Python slim image as base image
 FROM python:3.9-slim
 
+# Declare build arguments
+ARG FLASK_SECRET_KEY
+ARG API_SECRET_KEY
+
 # Set working directory
 WORKDIR /app
 
-# Set environment variables
+# Set environment variables using the build args
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    FLASK_SECRET_KEY=${FLASK_SECRET_KEY} \
-    API_SECRET_KEY=${API_SECRET_KEY}
+    FLASK_SECRET_KEY=$FLASK_SECRET_KEY \
+    API_SECRET_KEY=$API_SECRET_KEY
 
 # Install system dependencies (e.g., curl if needed)
 RUN apt-get update && \
@@ -16,7 +20,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file first to leverage Docker cache
-COPY requirements.txt ./
+COPY requirements.txt ./ 
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
